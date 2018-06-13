@@ -8,6 +8,17 @@ export default createStackNavigator(
     News: { screen: NewsScreen }
   },
   {
-    initialRouteName: "Home"
+    initialRouteName: "Home",
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: "#293D4E",
+      },
+      headerTintColor: "#ffffff",
+      headerTitleStyle: {
+        paddingVertical: 10,
+        fontWeight: "bold",
+        textAlign: "center"
+      }
+    }
   }
 );

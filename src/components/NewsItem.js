@@ -1,76 +1,53 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import moment from "moment";
+
+import { SourceColors } from "../config/constants";
+
+import styles from "./styles/NewsItem";
 
 export default class NewsItem extends Component {
   constructor(props) {
     super(props);
+    this.handleClick = this.handleClick.bind(this);
   }
   render() {
-    const { title, categories, pubDate } = this.props.data.item;
-    console.log(categories);
+    const { data, onClick } = this.props;
     return (
-      <View
-        style={{
-          padding: 20,
-          borderBottomColor: "#f0f0f0",
-          borderBottomWidth: 5
-        }}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            flex: 1,
-            justifyContent: "space-between",
-            marginBottom: 10
-          }}
-        >
-          <Text style={{ color: "#aaaaaa", fontSize: 12 }}>
-            {moment(pubDate).format("MMM Do, h:mm a")}
+      <View style={styles.itemRow}>
+        <View style={styles.itemRowHeader}>
+          <Text style={styles.itemPubDate}>
+            {moment(data.item.pubDate).format("MMM Do, h:mm a")}
           </Text>
           <Text
-            style={{
-              backgroundColor: "#EB443B",
-              color: "#ffffff",
-              fontSize: 12,
-              paddingHorizontal: 5
-            }}
+            style={[
+              styles.itemSource,
+              {
+                backgroundColor: SourceColors[data.item.source.title.toLowerCase()] || "gray"
+              }
+            ]}
           >
-            CNN
+            {data.item.source.title}
           </Text>
         </View>
-        <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>
-          {title}
-        </Text>
-        <View
-          style={{
-            flexDirection: "row",
-            flex: 1,
-            flexWrap: "wrap",
-            marginHorizontal: -2
-          }}
-        >
-          {categories.map(c => {
-            return (
-              <Text
-                style={{
-                  color: "#aaaaaa",
-                  paddingVertical: 2,
-                  paddingHorizontal: 4,
-                  marginHorizontal: 2,
-                  fontSize: 11,
-                  borderRadius: 4,
-                  marginVertical: 2,
-                  borderColor: "#f0f0f0",
-                  borderWidth: 1
-                }}
-              >
-                {c}
-              </Text>
-            );
-          })}
+        <TouchableOpacity onPress={this.handleClick}>
+          <View>
+            <Text style={styles.itemTitle}>{data.item.title}</Text>
+          </View>
+        </TouchableOpacity>
+        <View style={styles.badgeRow}>
+          {data.item.categories.map((category, index) => (
+            <Text key={index} style={styles.badge}>
+              {category}
+            </Text>
+          ))}
         </View>
       </View>
     );
+  }
+
+  handleClick() {
+    const { data, onClick } = this.props;
+    onClick ? onClick(data.item) : null;
   }
 }

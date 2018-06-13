@@ -1,50 +1,41 @@
 import React, { Component } from "react";
 import { View, Image, Text } from "react-native";
-import { Demo1 } from "../images";
-import { windowWidth } from "../styles/metrics";
 import LinearGradient from "react-native-linear-gradient";
+import styles from "./styles/HeadlineItem";
+import { SourceColors } from "../config/constants";
 
 export default class HeadlineItem extends Component {
   constructor(props) {
     super(props);
   }
   render() {
-    const { title, thumbnail } = this.props.data.item;
+    const { title, thumbnail, source } = this.props.data.item;
     return (
-      <View
-        style={{
-          borderRadius: 6,
-          overflow: "hidden",
-          position: "relative",
-          width: windowWidth * 0.8,
-          height: windowWidth * 0.8 * 0.7
-        }}
-      >
+      <View style={styles.item}>
         <Image
           source={{ uri: thumbnail }}
           resizeMode={"cover"}
           borderRadius={6}
-          style={{
-            flex: 1,
-            backgroundColor: "#dddddd"
-          }}
+          style={styles.itemImage}
         />
-        {/* <LinearGradient
-          locations={[0.5, 1]}
-          colors={["#00000000", "#ff000000"]}
-          style={{ position: "absolute", flex: 1 }}
-        /> */}
-        <Text
-          style={{
-            color: "white",
-            position: "absolute",
-            bottom: 20,
-            left: 20,
-            right: 20
-          }}
-        >
-          {title}
-        </Text>
+        <LinearGradient
+          colors={["#ff000000", "#000000"]}
+          style={styles.itemShade}
+        />
+        <View style={styles.itemContent}>
+          <Text
+            style={[
+              styles.itemSource,
+              {
+                backgroundColor:
+                  SourceColors[source.title.replace('.com News','').toLowerCase()] || "gray"
+              }
+            ]}
+          >
+            {source.title.replace('.com News','')}
+          </Text>
+          <Text style={styles.itemTitle}>{title}</Text>
+        </View>
       </View>
     );
   }
