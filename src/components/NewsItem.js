@@ -12,7 +12,7 @@ export default class NewsItem extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
   render() {
-    const { data, onClick } = this.props;
+    const { data } = this.props;
     return (
       <View style={styles.itemRow}>
         <View style={styles.itemRowHeader}>

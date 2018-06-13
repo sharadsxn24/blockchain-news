@@ -55,7 +55,7 @@ export default class HomeScreen extends Component {
   renderSectionHeader(title) {
     const { headlines } = this.state;
     return title === "headlines" && headlines ? (
-      <HeadlineSlider data={headlines} />
+      <HeadlineSlider data={headlines} onClick={this.handleNewsItemClick} />
     ) : null;
   }
 }

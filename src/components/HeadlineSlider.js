@@ -7,7 +7,7 @@ export default class HeadlineSlider extends Component {
     super(props);
   }
   render() {
-    const { data } = this.props;
+    const { data, onClick } = this.props;
 
     return (
       <View>
@@ -21,7 +21,7 @@ export default class HeadlineSlider extends Component {
           )}
           keyExtractor={item => "headline-" + item.guid.split("/").pop()}
           data={data}
-          renderItem={item => <HeadlineItem data={item} />}
+          renderItem={item => <HeadlineItem data={item} onClick={onClick} />}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
         />
